@@ -4,6 +4,7 @@
     <h1>My Cart</h1>
   </header>
 
+  <% if enhanced_cart.length > 0 %>
   <div class="panel panel-default items">
     <table class="table table-bordered">
       <thead>
@@ -48,5 +49,10 @@
       <% end %>
     </div>
   </div>
+  <% elsif enhanced_cart.length == 0 %>
+  <div class="alert alert-secondary" role="alert">
+    <%= fa_icon "exclamation-circle" %>Your cart is empty! <a href="<%= root_path %>">Shop all plants now</a>.
+  </div>
+  <% end %>
 
 </section>
