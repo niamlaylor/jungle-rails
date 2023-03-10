@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
   get 'about/index'
+  
   root to: 'products#index'
-
+  get '/about', to: 'about#index'
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
 
@@ -11,7 +12,6 @@ Rails.application.routes.draw do
     post   :remove_item
   end
 
-  get '/about', to: 'about#index'
 
   resources :orders, only: [:create, :show]
 
