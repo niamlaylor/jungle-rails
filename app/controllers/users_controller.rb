@@ -9,7 +9,8 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect_to '/'
     else
-      redirect_to '/signup'
+      flash.now[:error] = "Unable to create an account. Check the info you provided below and try again."
+      render 'new'
     end
   end
 
