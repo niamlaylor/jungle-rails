@@ -13,18 +13,15 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th colspan="2">Category</th>
+          <th colspan="1">Category</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <%# <td>
-            <%= @category.name %>
-          </td>
-        </tr>
+        <% @categories.each do |category| %>
+          <%= render "category", category: category %>
+        <% end %>
       </tbody>
     </table>
 
   </div>
-
 </section>
