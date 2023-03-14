@@ -1,0 +1,24 @@
+<tr>
+  <td>
+    <%= sale.name %>
+  </td>
+  <td>
+    <%= sale.starts_on_date %>
+  </td>
+  <td>
+    <%= sale.ends_on %>
+  </td>
+  <td>
+    <%# These custom methods are defined in the model %>
+    <% if sale.finished? %>
+    <button type="button" class="btn btn-danger btn-block" style="width: 100%;">Expired</button>
+    <% elsif sale.upcoming? %>
+    <button type="button" class="btn btn-warning btn-block" style="width: 100%;">Upcoming</button>
+    <% elsif sale.active? %>
+    <button type="button" class="btn btn-success btn-block" style="width: 100%;">Active</button>   
+    <% end %>
+  </td>
+  <td>
+    <%= sale.percent_off %>
+  </td>
+</tr>
