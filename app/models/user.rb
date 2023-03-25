@@ -12,7 +12,7 @@ class User < ApplicationRecord
     end 
   end
 
-  before_validation :downcase_email
+  before_validation :downcase_email, :trim_email
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -22,6 +22,10 @@ class User < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase if email.present?
+  end
+
+  def trim_email
+    self.email = email.strip if email.present?
   end
   
 end
