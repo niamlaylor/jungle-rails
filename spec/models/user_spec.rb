@@ -26,6 +26,12 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors[:password]).to include("is too short (minimum is 10 characters)")
     end
+
+    it 'should trim extra spaces from before or after the email' do
+      @user = User.create(email: '    test@test.com   ')
+      @user.valid?
+      expect(@user[:email]).to eq('test@test.com')
+    end
   end
 
   describe '.authenticate_with_credentials' do
@@ -34,11 +40,24 @@ RSpec.describe User, type: :model do
       @existing_user = User.find_by_email('test@test.com')
       expect(User.authenticate_with_credentials('test@test.com', 'test12345678')).to eq(nil)
     end
-    
+
     it 'should succeed when a user enters correct credentials' do
       @new_user = User.create(email: 'test@test.com', name: 'Liam Naylor', password: 'test123456', password_confirmation: 'test123456')
       @existing_user = User.find_by_email('test@test.com')
       expect(User.authenticate_with_credentials('test@test.com', 'test123456')).to eq(@existing_user)
     end
+
+    it 'should still authenticate when a user enters a correct email in wrong case' do
+      @new_user = User.create(email: 'test@test.com', name: 'Liam Naylor', password: 'test123456', password_confirmation: 'test123456')
+      @existing_user = User.find_by_email('test@test.com')
+      expect(User.authenticate_with_credentials('test@TEST.com', 'test123456')).to eq(@existing_user)
+    end
+
+    it 'should still authenticate when a user enters spaces before or after the email' do
+      @new_user = User.create(email: 'test@test.com', name: 'Liam Naylor', password: 'test123456', password_confirmation: 'test123456')
+      @existing_user = User.find_by_email('test@test.com')
+      expect(User.authenticate_with_credentials('   test@test.com    ', 'test123456')).to eq(@existing_user)
+    end
   end
+
 end
